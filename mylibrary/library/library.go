@@ -1,9 +1,9 @@
 package library
 
-import "task1/mylibrary/internal/book"
+import "task1/mylibrary/internal/model"
 
 type Library interface {
-	Search(title string) (*book.UserBook, bool)
-	AddBook(book *book.UserBook)
+	Search(title string) (*model.Book, bool)
+	addBook(book *model.Book)
 	generateID(title string) uint32
 }

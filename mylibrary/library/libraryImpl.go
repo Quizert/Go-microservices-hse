@@ -1,8 +1,8 @@
 package library
 
 import (
-	"task1/mylibrary/internal/book"
 	"task1/mylibrary/internal/idgenerator"
+	"task1/mylibrary/internal/model"
 	"task1/mylibrary/internal/storage"
 )
 
@@ -15,14 +15,14 @@ func NewLibrary(s storage.Storage, idGen func(title string) uint32) Library {
 	return &library{storage: s, idGen: idGen}
 }
 
-func (l *library) Search(title string) (*book.UserBook, bool) {
+func (l *library) Search(title string) (*model.Book, bool) {
 	id := l.idGen(title)
 	return l.storage.Search(id)
 }
 
-func (l *library) AddBook(b *book.UserBook) {
-	newInternalBook := book.CreateInternalBook(b.GetTitle(), b.GetAuthor(), l.idGen(b.GetTitle()))
-	l.storage.AddBook(newInternalBook)
+func (l *library) addBook(book *model.Book) {
+	book.Id = l.generateID(book.Title)
+	l.storage.AddBook(book)
 }
 
 func (l *library) generateID(title string) uint32 {
@@ -30,12 +30,13 @@ func (l *library) generateID(title string) uint32 {
 }
 
 func CreateMapStorage() storage.Storage {
-	return &storage.MapStorage{MapStorage: make(map[uint32]book.Book)}
-}
-func CreateIdGen() func(title string) uint32 {
-	return idgenerator.FnvID
+	return &storage.MapStorage{Storage: make(map[uint32]model.Book)}
 }
 
-func CreateBook(title string, author string) *book.UserBook {
-	return book.CreateUserBook(title, author)
+func CreateSliceStorage() storage.Storage {
+	return &storage.SliceStorage{Storage: make([]model.Book, 0)}
+}
+
+func CreateIdGen() func(title string) uint32 {
+	return idgenerator.FnvID
 }

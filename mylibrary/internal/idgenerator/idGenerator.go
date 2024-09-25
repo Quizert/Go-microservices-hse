@@ -10,3 +10,8 @@ func FnvID(title string) uint32 {
 	}
 	return h.Sum32()
 }
+
+func CreateIdGen() func(title string) uint32 {
+	//switch case
+	return FnvID
+}

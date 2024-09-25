@@ -1,20 +1,22 @@
 package storage
 
 import (
-	"task1/mylibrary/internal/book"
+	"task1/mylibrary/internal/model"
 )
 
 type MapStorage struct {
-	MapStorage map[uint32]book.Book
+	Storage map[uint32]model.Book
 }
 
-func (ms *MapStorage) Search(id uint32) (*book.UserBook, bool) {
-	v, ok := ms.MapStorage[id]
-	newUserBook := book.CreateUserBook(v.GetTitle(), v.GetAuthor())
-	return newUserBook, ok
+func (ms *MapStorage) Search(id uint32) (*model.Book, bool) {
+	book, ok := ms.Storage[id]
+	return &book, ok
 }
 
-func (ms *MapStorage) AddBook(book *book.Book) {
+func (ms *MapStorage) AddBook(book *model.Book) {
+	ms.Storage[book.Id] = *book
+}
 
-	ms.MapStorage[book.Id] = *book
+func FillMap(ms MapStorage) {
+
 }
