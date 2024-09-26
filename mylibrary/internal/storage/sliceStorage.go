@@ -1,25 +1,32 @@
 package storage
 
-import "task1/mylibrary/internal/model"
+import (
+	"fmt"
+	"task1/mylibrary/model"
+)
 
 type SliceStorage struct {
-	Storage []model.Book
+	Storage []*model.Book
 }
 
 func (ss *SliceStorage) Search(id uint32) (*model.Book, bool) {
 	for _, book := range ss.Storage {
 		if book.Id == id {
-			return &book, true
+			return book, true
 		}
 	}
 	return nil, false
 }
 
 func (ss *SliceStorage) AddBook(book *model.Book) {
-	ss.Storage = append(ss.Storage, *book)
-
+	ss.Storage = append(ss.Storage, book)
 }
 
+func (ss *SliceStorage) PrintBooks() {
+	for i, book := range ss.Storage {
+		fmt.Printf("%d) Title: %s, Author: %s, Id: %d\n", i, book.Title, book.Author, book.Id)
+	}
+}
 func CreateSliceStorage() Storage {
-	return &SliceStorage{Storage: make([]model.Book, 0)}
+	return &SliceStorage{Storage: make([]*model.Book, 0)}
 }
