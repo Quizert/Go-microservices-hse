@@ -51,6 +51,11 @@ func (l *library) ReplaceStorage() {
 func (l *library) PrintBooks() {
 	l.storage.PrintBooks()
 }
+
+func CreateBook(title, author string) *model.Book {
+	return &model.Book{Title: title, Author: author}
+}
+
 func CreateFnvGen() func(title string) uint32 {
 	return idgenerator.FnvID
 }
@@ -61,8 +66,4 @@ func CreateCrcGen() func(title string) uint32 {
 
 func (l *library) ReplaceIdGen(gen idgenerator.Generator) {
 	l.idGen = gen
-}
-
-func CreateBook(title, author string) *model.Book {
-	return &model.Book{Title: title, Author: author}
 }

@@ -19,7 +19,7 @@ func (ms *MapStorage) AddBook(book *model.Book) {
 }
 
 func (ms *MapStorage) PrintBooks() {
-	i := 0
+	i := 1
 	for _, book := range ms.Storage {
 		fmt.Printf("%d) Title: %s, Author: %s, Id: %d\n", i, book.Title, book.Author, book.Id)
 		i++

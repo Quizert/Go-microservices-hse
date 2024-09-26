@@ -24,7 +24,7 @@ func (ss *SliceStorage) AddBook(book *model.Book) {
 
 func (ss *SliceStorage) PrintBooks() {
 	for i, book := range ss.Storage {
-		fmt.Printf("%d) Title: %s, Author: %s, Id: %d\n", i, book.Title, book.Author, book.Id)
+		fmt.Printf("%d) Title: %s, Author: %s, Id: %d\n", i+1, book.Title, book.Author, book.Id)
 	}
 }
 func CreateSliceStorage() Storage {
