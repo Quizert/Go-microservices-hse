@@ -2,7 +2,7 @@ package storage
 
 import (
 	"fmt"
-	"task1/mylibrary/model"
+	"task1/internal/model"
 )
 
 type SliceStorage struct {
@@ -26,7 +26,4 @@ func (ss *SliceStorage) PrintBooks() {
 	for i, book := range ss.Storage {
 		fmt.Printf("%d) Title: %s, Author: %s, Id: %d\n", i+1, book.Title, book.Author, book.Id)
 	}
-}
-func CreateSliceStorage() Storage {
-	return &SliceStorage{Storage: make([]*model.Book, 0)}
 }

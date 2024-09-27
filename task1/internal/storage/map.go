@@ -2,7 +2,7 @@ package storage
 
 import (
 	"fmt"
-	"task1/mylibrary/model"
+	"task1/internal/model"
 )
 
 type MapStorage struct {
@@ -24,7 +24,4 @@ func (ms *MapStorage) PrintBooks() {
 		fmt.Printf("%d) Title: %s, Author: %s, Id: %d\n", i, book.Title, book.Author, book.Id)
 		i++
 	}
-}
-func CreateMapStorage() Storage {
-	return &MapStorage{Storage: make(map[uint32]*model.Book)}
 }

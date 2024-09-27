@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"task1/mylibrary/library"
-	"task1/mylibrary/model"
+	"task1/internal/library"
+	"task1/internal/model"
 )
 
 func main() {
@@ -18,7 +18,6 @@ func main() {
 	for _, b := range books {
 		lib.AddBook(b)
 	}
-	lib.PrintBooks() //Для наглядности
 
 	findHarryPotter, ok := lib.Search(book.Title) //Книга существует
 	fmt.Println("I found the", findHarryPotter.Title, ok)
@@ -27,11 +26,10 @@ func main() {
 	fmt.Println(searchDoesNotExist, ok, "Книги не существует, поэтому ok = false, чтобы мы случайно не использовали nil")
 	//Заменяем функцию генератора и находим еще книгу
 	CrcGen := library.CreateCrcGen()
-	lib.ReplaceIdGen(CrcGen)
+	lib.SetGenerator(CrcGen)
 	findWitcher, ok := lib.Search(book2.Title)
 	fmt.Println(findWitcher, ok, "Заменили функцию генератора, поэтому библиотека не может найти книгу по новому id")
 	lib.ReplaceStorage() //Заменяет хранилище с сохранением книг
-	lib.PrintBooks()     //Здесь хранилище уже slice
 
 	lib2 := library.NewSliceLibrary(CrcGen)
 

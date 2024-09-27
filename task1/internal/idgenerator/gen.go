@@ -5,7 +5,9 @@ import (
 	"hash/fnv"
 )
 
-type Generator func(title string) uint32
+type GeneratorStruct struct {
+	GenFunc func(title string) uint32
+}
 
 func FnvID(title string) uint32 {
 	h := fnv.New32a()
@@ -18,4 +20,12 @@ func FnvID(title string) uint32 {
 
 func CrcID(title string) uint32 {
 	return crc32.ChecksumIEEE([]byte(title))
+}
+
+func (g *GeneratorStruct) GenerateID(title string) uint32 {
+	return g.GenFunc(title)
+}
+
+func (g *GeneratorStruct) GetFunc() func(title string) uint32 {
+	return g.GenFunc
 }
