@@ -1,6 +1,11 @@
 package library
 
-type library struct {
-	storage Storage
-	idGen   func(title string) uint32
+import (
+	"task1/internal/idgenerator"
+	"task1/internal/storage"
+)
+
+type Library struct {
+	storage storage.Storage
+	idGen   idgenerator.Generator
 }

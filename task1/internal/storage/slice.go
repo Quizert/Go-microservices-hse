@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"task1/internal/idgenerator"
 	"task1/internal/model"
 )
 
@@ -21,9 +21,16 @@ func (ss *SliceStorage) Search(id uint32) (*model.Book, bool) {
 func (ss *SliceStorage) AddBook(book *model.Book) {
 	ss.Storage = append(ss.Storage, book)
 }
+func (ss *SliceStorage) ReplaceStorage() Storage {
+	return CreateMapStorage()
+}
 
-func (ss *SliceStorage) PrintBooks() {
-	for i, book := range ss.Storage {
-		fmt.Printf("%d) Title: %s, Author: %s, Id: %d\n", i+1, book.Title, book.Author, book.Id)
+func (ss *SliceStorage) RegenerateId(generator idgenerator.Generator) {
+	for _, book := range ss.Storage {
+		newID := generator.GenerateID(book.Title)
+		book.Id = newID
 	}
+}
+func CreateSliceStorage() Storage {
+	return &SliceStorage{Storage: make([]*model.Book, 0)}
 }

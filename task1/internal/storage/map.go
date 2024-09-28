@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"task1/internal/idgenerator"
 	"task1/internal/model"
 )
 
@@ -17,11 +17,18 @@ func (ms *MapStorage) Search(id uint32) (*model.Book, bool) {
 func (ms *MapStorage) AddBook(book *model.Book) {
 	ms.Storage[book.Id] = book
 }
+func (ms *MapStorage) ReplaceStorage() Storage {
+	return CreateSliceStorage()
+}
 
-func (ms *MapStorage) PrintBooks() {
-	i := 1
-	for _, book := range ms.Storage {
-		fmt.Printf("%d) Title: %s, Author: %s, Id: %d\n", i, book.Title, book.Author, book.Id)
-		i++
+func (ms *MapStorage) RegenerateId(generator idgenerator.Generator) {
+	for k, v := range ms.Storage {
+		newID := generator.GenerateID(v.Title)
+		delete(ms.Storage, k)
+		v.Id = newID
+		ms.Storage[newID] = v
 	}
+}
+func CreateMapStorage() Storage {
+	return &MapStorage{Storage: make(map[uint32]*model.Book)}
 }
