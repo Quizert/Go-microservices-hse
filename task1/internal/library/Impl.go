@@ -3,7 +3,6 @@ package library
 import (
 	"task1/internal/idgenerator"
 	"task1/internal/model"
-	"task1/internal/storage"
 )
 
 func (l *Library) Search(title string) (*model.Book, bool) {
@@ -16,8 +15,8 @@ func (l *Library) AddBook(book *model.Book) {
 	l.storage.AddBook(book)
 }
 
-func (l *Library) ReplaceStorage() {
-	l.storage = l.storage.ReplaceStorage()
+func (l *Library) ReplaceStorage(st Storage) {
+	l.storage = st
 }
 
 func (l *Library) SetGenerator(gen idgenerator.Generator) {
@@ -29,6 +28,6 @@ func CreateBook(title, author string) *model.Book {
 	return &model.Book{Title: title, Author: author}
 }
 
-func CreateLibrary(storage storage.Storage, idGen idgenerator.Generator) *Library {
+func CreateLibrary(storage Storage, idGen idgenerator.Generator) *Library {
 	return &Library{storage: storage, idGen: idGen}
 }

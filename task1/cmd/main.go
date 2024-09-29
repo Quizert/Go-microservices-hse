@@ -32,7 +32,9 @@ func main() {
 	lib.SetGenerator(CrcGen)
 	findWitcher, ok := lib.Search(book2.Title)
 	fmt.Println(findWitcher, ok, "Библиотека перегенерировала ID и нашла книгу")
-	lib.ReplaceStorage() //Заменяет хранилище с сохранением книг
+
+	newSliceStorage := storage.CreateSliceStorage()
+	lib.ReplaceStorage(newSliceStorage) //Заменяет хранилище с сохранением книг
 	lib.AddBook(library.CreateBook("newbook", "alice"))
 	lib.AddBook(library.CreateBook("tokyoghoul", "somebody"))
 	lib.SetGenerator(FnvGen)
