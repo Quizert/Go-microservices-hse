@@ -42,7 +42,6 @@ func RunServer() {
 		defer cancel()
 
 		if err := httpServer.Shutdown(shutdownCtx); err != nil {
-			fmt.Printf("err in shutdown: %s\n", err)
 			return fmt.Errorf("failed to shutdown http server: %w", err)
 		}
 		return nil

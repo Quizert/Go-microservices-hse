@@ -45,17 +45,25 @@ func DecodeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func HardOpHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	duration := time.Duration(rand.IntN(10)+11) * time.Second
-	select {
-	case <-time.After(duration):
-		if rand.IntN(2) == 0 {
-			w.Write([]byte("OK"))
-		} else {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	switch r.Method {
+	case "GET":
+		ctx := r.Context()
+		duration := time.Duration(rand.IntN(10)+11) * time.Second
+		select {
+		case <-time.After(duration):
+			if rand.IntN(2) == 0 {
+				w.Write([]byte("OK"))
+			} else {
+				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+				return
+			}
+		case <-ctx.Done():
+			fmt.Printf("HardOpHandler cancelled\n")
+			return
 		}
-	case <-ctx.Done():
-		fmt.Printf("HardOpHandler cancelled\n")
+	default:
+		fmt.Printf("Method not allowed\n")
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 }

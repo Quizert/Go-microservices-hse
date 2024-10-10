@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"main/pkg/model"
@@ -48,7 +49,7 @@ func MyPostRequest(base64String string) {
 }
 
 func MyHardOpRequest() {
-	ctx, cansel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cansel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cansel()
 
 	request, err := http.NewRequestWithContext(ctx, "GET", "http://localhost:8080/hard-op", nil)
@@ -59,11 +60,14 @@ func MyHardOpRequest() {
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
 		fmt.Println("error in Do:", err)
+		if errors.Is(ctx.Err(), context.DeadlineExceeded) {
+			fmt.Println(false)
+		}
 		return
 	}
 	defer response.Body.Close()
-	body, _ := io.ReadAll(response.Body)
-	fmt.Println(string(body))
+	fmt.Println(true, response.StatusCode)
+
 }
 func main() {
 	MyGetRequest()
