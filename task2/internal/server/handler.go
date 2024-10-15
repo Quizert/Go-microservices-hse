@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"main/pkg/model"
+	"main/internal/model"
 	"math/rand/v2"
 	"net/http"
 	"time"

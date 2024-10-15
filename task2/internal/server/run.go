@@ -24,7 +24,7 @@ func RunServer() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 	defer stop()
 
-	group, ctx := errgroup.WithContext(ctx)
+	group, groupCtx := errgroup.WithContext(ctx)
 
 	group.Go(func() error {
 		fmt.Printf("Listening on %s\n", httpServer.Addr)
@@ -37,7 +37,7 @@ func RunServer() {
 	})
 
 	group.Go(func() error {
-		<-ctx.Done()
+		<-groupCtx.Done()
 		shutdownCtx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
 

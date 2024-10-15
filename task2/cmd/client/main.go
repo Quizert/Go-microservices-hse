@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"main/pkg/model"
+	"main/internal/model"
 	"net/http"
 	"time"
 )
